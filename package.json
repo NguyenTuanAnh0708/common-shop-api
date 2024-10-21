@@ -1,10 +1,10 @@
 {
-  "name": "sample-nest-api",
+  "name": "quick-shop-api",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "QuickShopAPI is a powerful API solution built with NestJS for creating online shops quickly. It provides essential features like product management, user authentication, order processing, and payment integration. With a modular architecture, QuickShopAPI enables developers to easily customize and expand functionalities, ensuring a seamless shopping experience for customers.",
+  "author": "Nguyen Tuan Anh",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
