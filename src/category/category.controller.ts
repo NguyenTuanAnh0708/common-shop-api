@@ -15,6 +15,7 @@ import { Category } from 'src/category/entities/category.entity';
 import { query } from 'express';
 import { GetCategoriesDto } from 'src/category/dto/get-categories.dto';
 import { CategoriesResponse } from 'src/category/types/categories.type';
+import { ApiQuery } from '@nestjs/swagger';
 
 @Controller('category')
 export class CategoryController {
@@ -26,6 +27,10 @@ export class CategoryController {
   }
 
   @Get()
+  @ApiQuery({ name: 'limit', required: true, description: 'The number of categories to display per page', example:10})
+  @ApiQuery({ name: 'page', required: true, description: 'The current page number', example: 1 })
+  @ApiQuery({ name: 'orderBy', required: false, description: 'The column name to sort by, e.g.' })
+  @ApiQuery({ name: 'orderDirection', required: false, description: 'The direction of sorting, can be ASC (ascending) or DESC (descending)' })
   async getCategories(
     @Query() query: GetCategoriesDto,
   ): Promise<CategoriesResponse> {
