@@ -27,10 +27,29 @@ export class CategoryController {
   }
 
   @Get()
-  @ApiQuery({ name: 'limit', required: true, description: 'The number of categories to display per page', example:10})
-  @ApiQuery({ name: 'page', required: true, description: 'The current page number', example: 1 })
-  @ApiQuery({ name: 'orderBy', required: false, description: 'The column name to sort by, e.g.' })
-  @ApiQuery({ name: 'orderDirection', required: false, description: 'The direction of sorting, can be ASC (ascending) or DESC (descending)' })
+  @ApiQuery({
+    name: 'limit',
+    required: true,
+    description: 'The number of categories to display per page',
+    example: 10,
+  })
+  @ApiQuery({
+    name: 'page',
+    required: true,
+    description: 'The current page number',
+    example: 1,
+  })
+  @ApiQuery({
+    name: 'orderBy',
+    required: false,
+    description: 'The column name to sort by, e.g.',
+  })
+  @ApiQuery({
+    name: 'orderDirection',
+    required: false,
+    description:
+      'The direction of sorting, can be ASC (ascending) or DESC (descending)',
+  })
   async getCategories(
     @Query() query: GetCategoriesDto,
   ): Promise<CategoriesResponse> {
@@ -50,7 +69,7 @@ export class CategoryController {
 
   @Patch(':id')
   update(
-    @Param('id') id: string,
+    @Param('id') id: number,
     @Body() updateCategoryDto: UpdateCategoryDto,
   ) {
     return this.categoryService.update(+id, updateCategoryDto);

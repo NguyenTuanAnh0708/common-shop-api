@@ -1,11 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
-import { Category } from 'src/category/entities/category.entity';
+
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CategoriesResponse } from 'src/category/types/categories.type';
-
+import { Category } from 'src/category/entities/category.entity';
 @Injectable()
 export class CategoryService {
   constructor(
@@ -13,8 +13,15 @@ export class CategoryService {
     private categoryRepository: Repository<Category>,
   ) {}
 
-  create(createCategoryDto: CreateCategoryDto) {
-    return 'This action adds a new category';
+  async create(
+    createCategoryDto: CreateCategoryDto,
+  ): Promise<{ category: Category; message: string }> {
+    const cateNew = this.categoryRepository.create(createCategoryDto);
+    const categories = await this.categoryRepository.save(cateNew);
+    return {
+      message: 'create categoris success',
+      category: categories,
+    };
   }
 
   async findAll(
@@ -43,15 +50,29 @@ export class CategoryService {
     };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} category`;
+  async findOne(id: number): Promise<Category> {
+    const categories = await this.categoryRepository.findOneBy({ id });
+    if (!categories) {
+      throw new NotFoundException(`Category với ID ${id} không tồn tại`);
+    }
+    return categories;
   }
 
-  update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    return `This action updates a #${id} category`;
+  async update(
+    id: number,
+    updateCategoryDto: UpdateCategoryDto,
+  ): Promise<{ category: Category; message: string }> {
+    await this.categoryRepository.update(id, updateCategoryDto);
+
+    const updatedCategory = await this.findOne(id);
+    return {
+      message: 'update category success',
+      category: updatedCategory,
+    };
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} category`;
+  async remove(id: number): Promise<{ message: string }> {
+    await this.categoryRepository.delete(id);
+    return { message: `delete success category id:${id}` };
   }
 }
