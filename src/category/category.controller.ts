@@ -15,8 +15,9 @@ import { Category } from 'src/category/entities/category.entity';
 import { query } from 'express';
 import { GetCategoriesDto } from 'src/category/dto/get-categories.dto';
 import { CategoriesResponse } from 'src/category/types/categories.type';
-import { ApiQuery } from '@nestjs/swagger';
+import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Category')
 @Controller('category')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
@@ -27,6 +28,19 @@ export class CategoryController {
   }
 
   @Get()
+  @ApiOperation({
+    summary: 'Get all categories with pagination',
+    description: `
+      Retrieves a paginated list of categories from the shop.
+      You can specify the number of categories per page and which page to fetch.
+      Optionally, you can sort the categories by a specific field in either ascending or descending order.
+    `,
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'List of categories retrieved successfully.',
+    type: [Category],
+  })
   @ApiQuery({
     name: 'limit',
     required: true,
