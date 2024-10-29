@@ -21,6 +21,7 @@ export function MinValueString(
   minValue: number,
   validationOptions?: ValidationOptions,
 ) {
+  // eslint-disable-next-line @typescript-eslint/no-wrapper-object-types
   return function (object: Object, propertyName: string) {
     registerDecorator({
       name: 'minValueString',
