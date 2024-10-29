@@ -15,12 +15,12 @@ export class CategoryService {
 
   async create(
     createCategoryDto: CreateCategoryDto,
-  ): Promise<{ category: Category; message: string }> {
-    const cateNew = this.categoryRepository.create(createCategoryDto);
-    const categories = await this.categoryRepository.save(cateNew);
+  ): Promise<{ newCategory: Category; message: string }> {
+    const newCategoryData = this.categoryRepository.create(createCategoryDto);
+    const newCategory = await this.categoryRepository.save(newCategoryData);
     return {
-      message: 'create categoris success',
-      category: categories,
+      message: 'Category created successfully.',
+      newCategory: newCategory,
     };
   }
 
@@ -51,28 +51,29 @@ export class CategoryService {
   }
 
   async findOne(id: number): Promise<Category> {
-    const categories = await this.categoryRepository.findOneBy({ id });
-    if (!categories) {
-      throw new NotFoundException(`Category với ID ${id} không tồn tại`);
+    const category = await this.categoryRepository.findOneBy({ id });
+    if (!category) {
+      throw new NotFoundException(`Category is not found with id =${id}`);
     }
-    return categories;
+    return category;
   }
 
   async update(
     id: number,
     updateCategoryDto: UpdateCategoryDto,
-  ): Promise<{ category: Category; message: string }> {
+  ): Promise<{ updatedCategory: any; message: string }> {
+    await this.findOne(id);
     await this.categoryRepository.update(id, updateCategoryDto);
-
     const updatedCategory = await this.findOne(id);
     return {
-      message: 'update category success',
-      category: updatedCategory,
+      message: 'Category updated successfully.',
+      updatedCategory: updatedCategory,
     };
   }
 
   async remove(id: number): Promise<{ message: string }> {
+    await this.findOne(id);
     await this.categoryRepository.delete(id);
-    return { message: `delete success category id:${id}` };
+    return { message: `Delete success category id:${id}` };
   }
 }

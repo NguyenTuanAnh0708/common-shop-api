@@ -17,7 +17,7 @@ export class CreateCategoryDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  @MaxLength(500)
+  @MaxLength(4000)
   description?: string;
 
   @ApiProperty()
@@ -26,9 +26,6 @@ export class CreateCategoryDto {
   @MaxLength(100)
   slug?: string;
 
-  // @ApiProperty({ nullable: true })
-  // @IsInt({ message: 'Parent category ID must be an integer' })
-  // parent_category_id?: number | null;
   @ApiProperty({
     nullable: true,
     description: 'Parent category ID can be an integer or null',
