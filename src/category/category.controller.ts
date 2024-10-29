@@ -15,8 +15,9 @@ import { Category } from 'src/category/entities/category.entity';
 import { query } from 'express';
 import { GetCategoriesDto } from 'src/category/dto/get-categories.dto';
 import { CategoriesResponse } from 'src/category/types/categories.type';
-import { ApiQuery } from '@nestjs/swagger';
+import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Category')
 @Controller('category')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
@@ -27,10 +28,42 @@ export class CategoryController {
   }
 
   @Get()
-  @ApiQuery({ name: 'limit', required: true, description: 'The number of categories to display per page', example:10})
-  @ApiQuery({ name: 'page', required: true, description: 'The current page number', example: 1 })
-  @ApiQuery({ name: 'orderBy', required: false, description: 'The column name to sort by, e.g.' })
-  @ApiQuery({ name: 'orderDirection', required: false, description: 'The direction of sorting, can be ASC (ascending) or DESC (descending)' })
+  @ApiOperation({
+    summary: 'Get all categories with pagination',
+    description: `
+      Retrieves a paginated list of categories from the shop.
+      You can specify the number of categories per page and which page to fetch.
+      Optionally, you can sort the categories by a specific field in either ascending or descending order.
+    `,
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'List of categories retrieved successfully.',
+    type: [Category],
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: true,
+    description: 'The number of categories to display per page',
+    example: 10,
+  })
+  @ApiQuery({
+    name: 'page',
+    required: true,
+    description: 'The current page number',
+    example: 1,
+  })
+  @ApiQuery({
+    name: 'orderBy',
+    required: false,
+    description: 'The column name to sort by, e.g.',
+  })
+  @ApiQuery({
+    name: 'orderDirection',
+    required: false,
+    description:
+      'The direction of sorting, can be ASC (ascending) or DESC (descending)',
+  })
   async getCategories(
     @Query() query: GetCategoriesDto,
   ): Promise<CategoriesResponse> {
