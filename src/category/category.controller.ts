@@ -12,7 +12,6 @@ import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { Category } from 'src/category/entities/category.entity';
-import { query } from 'express';
 import { GetCategoriesDto } from 'src/category/dto/get-categories.dto';
 import { CategoriesResponse } from 'src/category/types/categories.type';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
