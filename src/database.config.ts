@@ -7,7 +7,7 @@ export const databaseConfig: TypeOrmModuleOptions = {
   host: 'localhost',
   port: 1433,
   username: 'SA',
-  password: 'T.a07082003',
+  password: 'test01',
   database: 'quick-shop',
   entities: [Category, User],
   synchronize: true,

@@ -6,11 +6,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { databaseConfig } from 'src/database.config';
 import { AuthModule } from './auth/auth.module';
+import { ProductController } from './product/product.controller';
+import { ProductService } from './product/product.service';
+import { ProductModule } from './product/product.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(databaseConfig), CategoryModule, AuthModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [TypeOrmModule.forRoot(databaseConfig), CategoryModule, AuthModule, ProductModule],
+  controllers: [AppController, ProductController],
+  providers: [AppService, ProductService],
 })
 export class AppModule implements OnModuleInit {
   constructor(private dataSource: DataSource) {}
