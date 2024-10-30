@@ -1,4 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { User } from 'src/auth/entities/auth.entity';
 import { Category } from 'src/category/entities/category.entity';
 
 export const databaseConfig: TypeOrmModuleOptions = {
@@ -8,7 +9,7 @@ export const databaseConfig: TypeOrmModuleOptions = {
   username: 'SA',
   password: 'T.a07082003',
   database: 'quick-shop',
-  entities: [Category],
+  entities: [Category, User],
   synchronize: true,
   extra: {
     trustServerCertificate: true,

@@ -12,6 +12,14 @@ async function bootstrap() {
       'The "Quick Shop API" project aims to develop a complete set of RESTful APIs for an online shopping store. The primary goal is to provide easy-to-use, quickly deployable APIs that fully meet the requirements of an e-commerce system.',
     )
     .setVersion('1.0')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+      'authorization',
+    )
     // .addTag('Products', 'Operations related to product management.')
     // .addTag('Cart', 'Operations for managing the shopping cart.')
     // .addTag('Orders', 'Operations for handling customer orders.')

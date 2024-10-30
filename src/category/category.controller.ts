@@ -7,18 +7,27 @@ import {
   Param,
   Delete,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { Category } from 'src/category/entities/category.entity';
-import { query } from 'express';
 import { GetCategoriesDto } from 'src/category/dto/get-categories.dto';
 import { CategoriesResponse } from 'src/category/types/categories.type';
-import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { AuthGuard } from 'src/auth/guards/auth/auth.guard';
 
 @ApiTags('Category')
 @Controller('category')
+@UseGuards(AuthGuard)
+@ApiBearerAuth('authorization')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
