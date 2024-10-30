@@ -47,11 +47,11 @@ export class AuthController {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...userResponse } = user;
-    const jwtToken = this.jwtService.sign(userResponse);
+    const access_token = await this.jwtService.signAsync(userResponse);
     return {
       message: 'Login successful',
       user: userResponse,
-      jwtToken: jwtToken,
+      access_token: access_token,
     };
   }
 }
