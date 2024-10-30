@@ -5,7 +5,7 @@ export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'nvachar' })
+  @Column({ type: 'nvarchar' })
   name: string;
 
   @Column({ type: 'nvarchar' })

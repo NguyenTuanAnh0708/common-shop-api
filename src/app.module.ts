@@ -1,4 +1,9 @@
-import { Module, OnModuleInit } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  OnModuleInit,
+} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CategoryModule } from './category/category.module';
@@ -6,16 +11,21 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { databaseConfig } from 'src/database.config';
 import { AuthModule } from './auth/auth.module';
-import { ProductController } from './product/product.controller';
-import { ProductService } from './product/product.service';
+
 import { ProductModule } from './product/product.module';
+import { LoggerMiddleware } from 'src/middleware/LoggerMiddleware';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(databaseConfig), CategoryModule, AuthModule, ProductModule],
-  controllers: [AppController, ProductController],
-  providers: [AppService, ProductService],
+  imports: [
+    TypeOrmModule.forRoot(databaseConfig),
+    CategoryModule,
+    AuthModule,
+    ProductModule,
+  ],
+  controllers: [AppController],
+  providers: [AppService],
 })
-export class AppModule implements OnModuleInit {
+export class AppModule implements OnModuleInit, NestModule {
   constructor(private dataSource: DataSource) {}
 
   async onModuleInit() {
@@ -24,5 +34,9 @@ export class AppModule implements OnModuleInit {
     } catch (error) {
       console.error('Error connecting to the database:', error);
     }
+  }
+
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('*');
   }
 }

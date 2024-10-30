@@ -407,10 +407,13 @@
         </mxGraphModel>
     </diagram>
     <diagram id="q20WUlvzmt6VdQU30xF4" name="sample">
-        <mxGraphModel dx="2026" dy="805" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1350" dy="805" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
+                <mxCell id="Gz8oXQPBPZDkcMgc-phD-1" value="&lt;h1&gt;Heading&lt;/h1&gt;&lt;p&gt;{&lt;/p&gt;&lt;p&gt;&amp;nbsp; &quot;status&quot;: &quot;success&quot;,&lt;/p&gt;&lt;p&gt;&amp;nbsp; &quot;message&quot;: &quot;Login successful&quot;,&lt;/p&gt;&lt;p&gt;&amp;nbsp; &quot;data&quot;: {&lt;/p&gt;&lt;p&gt;&amp;nbsp; &amp;nbsp; &quot;user&quot;: {&lt;/p&gt;&lt;p&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &quot;id&quot;: 3,&lt;/p&gt;&lt;p&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &quot;firstName&quot;: &quot;Tuấn Anh&quot;,&lt;/p&gt;&lt;p&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &quot;lastName&quot;: &quot;Nguyễn&quot;,&lt;/p&gt;&lt;p&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &quot;userName&quot;: &quot;tuananh&quot;,&lt;/p&gt;&lt;p&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &quot;email&quot;: &quot;tuananh@gmail.com&quot;,&lt;/p&gt;&lt;p&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &quot;role&quot;: &quot;user&quot;,&lt;/p&gt;&lt;p&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &quot;createdAt&quot;: &quot;2024-10-29T09:13:48.430Z&quot;,&lt;/p&gt;&lt;p&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &quot;updatedAt&quot;: &quot;2024-10-29T09:13:48.430Z&quot;&lt;/p&gt;&lt;p&gt;&amp;nbsp; &amp;nbsp; },&lt;/p&gt;&lt;p&gt;&amp;nbsp; &amp;nbsp; &quot;jwtToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZmlyc3ROYW1lIjoiVHXhuqVuIEFuaCIsImxhc3ROYW1lIjoiTmd1eeG7hW4iLCJ1c2VyTmFtZSI6InR1YW5hbmgiLCJlbWFpbCI6InR1YW5hbmhAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJjcmVhdGVkQXQiOiIyMDI0LTEwLTI5VDA5OjEzOjQ4LjQzMFoiLCJ1cGRhdGVkQXQiOiIyMDI0LTEwLTI5VDA5OjEzOjQ4LjQzMFoiLCJpYXQiOjE3MzAyMjE4MDcsImV4cCI6MTczMDIyNTQwN30.nd2Kxeke0RAnHxzYRlR-rwyhAJJPgGHyMNjYNcZUA1I&quot;&lt;/p&gt;&lt;p&gt;&amp;nbsp; },&lt;/p&gt;&lt;p&gt;&amp;nbsp; &quot;errors&quot;: null&lt;/p&gt;&lt;p&gt;}&lt;/p&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="10" y="180" width="560" height="580" as="geometry"/>
+                </mxCell>
             </root>
         </mxGraphModel>
     </diagram>
