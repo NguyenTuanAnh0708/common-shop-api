@@ -1,0 +1,68 @@
+validation form response
+raw 
+
+{
+  "message": [
+    "Invalid email format.",
+    "Password must include uppercase, lowercase, number, and special character.",
+    "Password must be between 8 and 20 characters."
+  ],
+  "error": "Bad Request",
+  "statusCode": 400
+}
+
+// failure
+{
+  "statusCode": 401,
+  data:null
+  "message": "Register fail"
+  errors:[
+    {
+      "field": "email",
+      "message": ["Invalid email format."]
+    },
+    {
+      "field": "password",
+      "message": 
+        "Password must include uppercase, lowercase, number, and special character.",
+    
+    }
+  ]
+}
+
+// thành công
+
+{
+  "statusCode": 200,
+  data:{
+    //
+    data người dungf
+  }
+  "message": "Register thanhf coong "
+  errors:null
+}
+
+
+ui
+form register
+
+email
+typing email...
+sai
+
+
+password 
+
+lastName
+
+
+.....
+
+common response type 
+
+{
+  "statusCode": number,
+  data: any
+  "message": string
+  errors: any
+}
