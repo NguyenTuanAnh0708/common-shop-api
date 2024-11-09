@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+// import { Category } from 'src/category/entities/category.entities';
+// import { Product } from 'src/product/entites/product.entities';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity('users')
 export class User {
@@ -26,6 +28,9 @@ export class User {
     default: 'user',
   })
   role: string;
+
+  // @OneToMany(() => Category, (category) => category.user)
+  // Categories: Category[];
 
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
