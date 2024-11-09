@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   HttpException,
@@ -10,6 +11,8 @@ import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from 'src/auth/auth.service';
 import { LoginDto, RegisterDto } from 'src/auth/dto/auth.dto';
 import { UnauthorizedException } from '@nestjs/common';
+import { plainToInstance } from 'class-transformer';
+import { validate } from 'class-validator';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -21,6 +24,24 @@ export class AuthController {
 
   @Post('register')
   async register(@Body() registerDto: RegisterDto) {
+    // Convert and validate the DTO manually
+    const dtoInstance = plainToInstance(RegisterDto, registerDto);
+    const errors = await validate(dtoInstance);
+
+    console.log(errors);
+
+    // If there are validation errors, format and return them
+    if (errors.length > 0) {
+      const formattedErrors = errors.map((error) => {
+        const firstConstraint = Object.values(error.constraints)[0];
+        return { field: error.property, message: firstConstraint };
+      });
+      throw new BadRequestException({
+        statusCode: 400,
+        message: 'Validation failed',
+        errors: formattedErrors,
+      });
+    }
     const user = await this.authService.findByEmail(registerDto.email);
     if (user) {
       throw new HttpException(

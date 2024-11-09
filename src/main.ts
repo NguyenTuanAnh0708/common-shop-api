@@ -28,7 +28,12 @@ async function bootstrap() {
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
-  app.useGlobalPipes(new ValidationPipe());
+  // app.useGlobalPipes(
+  //   new ValidationPipe({
+  //     stopAtFirstError: true,
+  //   }),
+  // );
+
   await app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}/api`);
   });

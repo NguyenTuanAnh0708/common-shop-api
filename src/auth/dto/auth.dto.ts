@@ -10,10 +10,10 @@ import {
 export class RegisterDto {
   @ApiProperty({ description: 'The firstName of the user' })
   @IsString()
-  @IsNotEmpty({ message: 'First name is required' })
   @Length(1, 255, {
     message: 'First name must be between 1 and 255 characters',
   })
+  @IsNotEmpty({ message: 'First name is required' })
   firstName: string;
 
   @ApiProperty({ description: 'The lastName of the user' })
