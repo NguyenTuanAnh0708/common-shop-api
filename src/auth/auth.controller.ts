@@ -11,9 +11,9 @@ import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from 'src/auth/auth.service';
 import { LoginDto, RegisterDto } from 'src/auth/dto/auth.dto';
 import { UnauthorizedException } from '@nestjs/common';
-import { LoginResponse, UserResponse } from './types/auth.type';
+// import { LoginResponse, UserResponse } from './types/auth.type';
 
-import { validatePassword } from '../decorator/validatePassword.util';
+// import { validatePassword } from '../decorator/validatePassword.util';
 import { validate } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 
@@ -24,9 +24,6 @@ export class AuthController {
     private readonly authService: AuthService,
     private readonly jwtService: JwtService,
   ) {}
-  private validateePassword(password: string): any[] {
-    return validatePassword(password);
-  }
 
   @Post('register')
   async register(@Body() registerDto: RegisterDto) {
@@ -45,15 +42,6 @@ export class AuthController {
         errors: formattedErrors,
       });
     }
-    const passwordErrors = this.validateePassword(registerDto.password);
-    if (passwordErrors.length > 0) {
-      throw new BadRequestException({
-        statusCode: HttpStatus.BAD_REQUEST,
-        message: 'Validation failed',
-        data: null,
-        errors: passwordErrors,
-      });
-    }
 
     const user = await this.authService.findByEmail(registerDto.email);
     if (user) {
@@ -66,29 +54,38 @@ export class AuthController {
   }
 
   @Post('login')
-  async login(@Body() loginDto: LoginDto): Promise<LoginResponse> {
-    // Bước 1: Kiểm tra xem người dùng có tồn tại không
+  async login(@Body() loginDto: LoginDto) {
+    // Convert and validate the DTO manually
+    const dtoInstance = plainToInstance(LoginDto, loginDto);
+    const errors = await validate(dtoInstance);
+
+    // If there are validation errors, format and return them
+    if (errors.length > 0) {
+      const formattedErrors = errors.map((error) => {
+        const firstConstraint = Object.values(error.constraints)[0];
+        return { field: error.property, message: firstConstraint };
+      });
+      throw new BadRequestException({
+        statusCode: 400,
+        message: 'Validation failed',
+        errors: formattedErrors,
+      });
+    }
+
+    // Check if user exists
     const user = await this.authService.findByEmail(loginDto.email);
     if (!user) {
       throw new UnauthorizedException({
         statusCode: HttpStatus.UNAUTHORIZED,
-        message: 'login failed',
-        data: null,
-        errors: 'unauthorized',
-      });
-    }
-    // Bước 2: Kiểm tra thủ công mật khẩu với các trường hợp khác nhau
-    const passwordErrors = this.validateePassword(loginDto.password);
-    if (passwordErrors.length > 0) {
-      throw new BadRequestException({
-        statusCode: HttpStatus.BAD_REQUEST,
-        message: 'Validation failed',
-        data: null,
-        errors: passwordErrors,
+        message: 'User not found',
+        errors: {
+          field: 'email',
+          message: 'User with this email does not exist.',
+        },
       });
     }
 
-    // Bước 3: Kiểm tra tính hợp lệ của mật khẩu
+    // Validate password
     const validPassword = await this.authService.validatePassword(
       loginDto.password,
       user.password,
@@ -96,18 +93,12 @@ export class AuthController {
     if (!validPassword) {
       throw new UnauthorizedException({
         statusCode: HttpStatus.UNAUTHORIZED,
-        message: 'login failed',
-        data: null,
-        errors: 'unauthorized',
+        message: 'Invalid password',
+        errors: [{ field: 'password', message: 'Password is incorrect.' }],
       });
-      // return {
-      //   statusCode: HttpStatus.UNAUTHORIZED,
-      //   message: 'Login failed',
-      //   errors: 'Invalid password',
-      // };
     }
 
-    // Bước 4: Tạo access token cho người dùng
+    // Generate access token
     const { password, ...userResponse } = user;
     const access_token = await this.jwtService.signAsync(userResponse);
 
@@ -115,10 +106,9 @@ export class AuthController {
       statusCode: HttpStatus.OK,
       message: 'Login successful',
       data: {
-        user: userResponse as UserResponse,
+        user: userResponse,
         access_token: access_token,
       },
-      errors: null,
     };
   }
 }
